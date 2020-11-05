@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AssociateManagementCore\AssociateManagement.csproj" />
+    <ProjectReference Include="..\AssociateManagement.Core\AssociateManagement.csproj" />
   </ItemGroup>
 
 </Project>
