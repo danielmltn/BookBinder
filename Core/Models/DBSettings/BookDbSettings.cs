@@ -1,6 +1,6 @@
-namespace AssociateManagement.Models.DBSettings {
+namespace BookBinderBE.Models.DBSettings {
 
-    public class AssociateDbSettings : IMongoDbSettings 
+    public class BookDbSettings : IMongoDbSettings 
     {
         public string CollectionName { get; set; }
         public string ConnectionString { get; set; }

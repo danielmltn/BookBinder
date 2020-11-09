@@ -12,11 +12,11 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
-using AssociateManagement.Services;
-using AssociateManagement.Models.DBSettings;
-using AssociateManagement.Models.AssociateInfo;
+using BookBinderBE.Services;
+using BookBinderBE.Models.DBSettings;
+using BookBinderBE.Models.BookInfo;
 
-namespace AssociateManagement
+namespace BookBinderBE
 {
     public class Startup
     {
@@ -33,18 +33,18 @@ namespace AssociateManagement
             services.AddControllers();
 
 
-            services.Configure<AssociateDbSettings>(
-                Configuration.GetSection(nameof(AssociateDbSettings)));
+            services.Configure<BookDbSettings>(
+                Configuration.GetSection(nameof(BookDbSettings)));
             services.AddSingleton<IMongoDbSettings>(sp =>
-                sp.GetRequiredService<IOptions<AssociateDbSettings>>().Value);
+                sp.GetRequiredService<IOptions<BookDbSettings>>().Value);
 
 
-            // services.AddSingleton<IDatabaseService<Associate>, AssociateService>();
+            // services.AddSingleton<IDatabaseService<Book>, BookService>();
 
-            services.AddSingleton<IDatabaseService<Associate>, AssociateService>(sp => new AssociateService(
-                sp.GetRequiredService<ILogger<AssociateService>>(), 
-                sp.GetRequiredService<IOptions<AssociateDbSettings>>().Value, 
-                new MongoClient(sp.GetRequiredService<IOptions<AssociateDbSettings>>().Value.ConnectionString))
+            services.AddSingleton<IDatabaseService<Book>, BookService>(sp => new BookService(
+                sp.GetRequiredService<ILogger<BookService>>(), 
+                sp.GetRequiredService<IOptions<BookDbSettings>>().Value, 
+                new MongoClient(sp.GetRequiredService<IOptions<BookDbSettings>>().Value.ConnectionString))
             );
         }
 

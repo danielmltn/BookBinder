@@ -1,7 +1,7 @@
 .vscode/
-AssociateManagement.Tests/obj/
-AssociateManagement.Tests/bin/
+Tests/obj/
+Tests/bin/
 
-AssociateManagementCore/.vscode/
-AssociateManagementCore/obj/
-AssociateManagementCore/bin/
+Core/.vscode/
+Core/obj/
+Core/bin/

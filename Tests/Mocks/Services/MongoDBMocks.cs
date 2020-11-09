@@ -1,7 +1,7 @@
 using Microsoft.Extensions.Logging;
-using AssociateManagement.Models.DBSettings;
-using AssociateManagement.Models.AssociateInfo;
-using AssociateManagement.Services;
+using BookBinderBE.Models.DBSettings;
+using BookBinderBE.Models.BookInfo;
+using BookBinderBE.Services;
 using MongoDB.Driver;
 using MongoDB.Driver.Core.Clusters;
 using System;
@@ -11,39 +11,39 @@ using System.Threading.Tasks;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
 
-public class MockMongoIndexManager<Associate> : IMongoIndexManager<Associate>
+public class MockMongoIndexManager<Book> : IMongoIndexManager<Book>
 {
     public MongoCollectionSettings Settings { get => null; }
     public CollectionNamespace CollectionNamespace { get => null; }
-    public IBsonSerializer<Associate> DocumentSerializer { get; }
-    public IEnumerable<string> CreateMany(IEnumerable<CreateIndexModel<Associate>> models, CancellationToken cancellationToken = default) 
+    public IBsonSerializer<Book> DocumentSerializer { get; }
+    public IEnumerable<string> CreateMany(IEnumerable<CreateIndexModel<Book>> models, CancellationToken cancellationToken = default) 
     {
         return new List<string>{"test"};
     }
-    public IEnumerable<string> CreateMany(IEnumerable<CreateIndexModel<Associate>> models, CreateManyIndexesOptions options, CancellationToken cancellationToken = default)
+    public IEnumerable<string> CreateMany(IEnumerable<CreateIndexModel<Book>> models, CreateManyIndexesOptions options, CancellationToken cancellationToken = default)
     {
         return new List<string>{"test"};
     }
-    public IEnumerable<string> CreateMany(IClientSessionHandle session, IEnumerable<CreateIndexModel<Associate>> models, CreateManyIndexesOptions options, CancellationToken cancellationToken = default)
+    public IEnumerable<string> CreateMany(IClientSessionHandle session, IEnumerable<CreateIndexModel<Book>> models, CreateManyIndexesOptions options, CancellationToken cancellationToken = default)
     {
         return new List<string>{"test"};
     }
-    public IEnumerable<string> CreateMany(IClientSessionHandle session, IEnumerable<CreateIndexModel<Associate>> models, CancellationToken cancellationToken = default)
+    public IEnumerable<string> CreateMany(IClientSessionHandle session, IEnumerable<CreateIndexModel<Book>> models, CancellationToken cancellationToken = default)
     {
         return new List<string>{"test"};
     }
-    public Task<IEnumerable<string>> CreateManyAsync(IEnumerable<CreateIndexModel<Associate>> models, CancellationToken cancellationToken = default) => null;
-    public Task<IEnumerable<string>> CreateManyAsync(IEnumerable<CreateIndexModel<Associate>> models, CreateManyIndexesOptions options, CancellationToken cancellationToken = default) => null;
-    public Task<IEnumerable<string>> CreateManyAsync(IClientSessionHandle session, IEnumerable<CreateIndexModel<Associate>> models, CancellationToken cancellationToken = default) => null;
-    public Task<IEnumerable<string>> CreateManyAsync(IClientSessionHandle session, IEnumerable<CreateIndexModel<Associate>> models, CreateManyIndexesOptions options, CancellationToken cancellationToken = default) => null;
-    public string CreateOne(CreateIndexModel<Associate> model, CreateOneIndexOptions options = null, CancellationToken cancellationToken = default) => "index name here";
-    public string CreateOne(IndexKeysDefinition<Associate> keys, CreateIndexOptions options = null, CancellationToken cancellationToken = default) => "";
-    public string CreateOne(IClientSessionHandle session, IndexKeysDefinition<Associate> keys, CreateIndexOptions options = null, CancellationToken cancellationToken = default) => "";
-    public string CreateOne(IClientSessionHandle session, CreateIndexModel<Associate> model, CreateOneIndexOptions options = null, CancellationToken cancellationToken = default) => "";
-    public Task<string> CreateOneAsync(CreateIndexModel<Associate> model, CreateOneIndexOptions options = null, CancellationToken cancellationToken = default) => null;
-    public Task<string> CreateOneAsync(IndexKeysDefinition<Associate> keys, CreateIndexOptions options = null, CancellationToken cancellationToken = default) => null;
-    public Task<string> CreateOneAsync(IClientSessionHandle session, IndexKeysDefinition<Associate> keys, CreateIndexOptions options = null, CancellationToken cancellationToken = default) => null;
-    public Task<string> CreateOneAsync(IClientSessionHandle session, CreateIndexModel<Associate> model, CreateOneIndexOptions options = null, CancellationToken cancellationToken = default) => null;
+    public Task<IEnumerable<string>> CreateManyAsync(IEnumerable<CreateIndexModel<Book>> models, CancellationToken cancellationToken = default) => null;
+    public Task<IEnumerable<string>> CreateManyAsync(IEnumerable<CreateIndexModel<Book>> models, CreateManyIndexesOptions options, CancellationToken cancellationToken = default) => null;
+    public Task<IEnumerable<string>> CreateManyAsync(IClientSessionHandle session, IEnumerable<CreateIndexModel<Book>> models, CancellationToken cancellationToken = default) => null;
+    public Task<IEnumerable<string>> CreateManyAsync(IClientSessionHandle session, IEnumerable<CreateIndexModel<Book>> models, CreateManyIndexesOptions options, CancellationToken cancellationToken = default) => null;
+    public string CreateOne(CreateIndexModel<Book> model, CreateOneIndexOptions options = null, CancellationToken cancellationToken = default) => "index name here";
+    public string CreateOne(IndexKeysDefinition<Book> keys, CreateIndexOptions options = null, CancellationToken cancellationToken = default) => "";
+    public string CreateOne(IClientSessionHandle session, IndexKeysDefinition<Book> keys, CreateIndexOptions options = null, CancellationToken cancellationToken = default) => "";
+    public string CreateOne(IClientSessionHandle session, CreateIndexModel<Book> model, CreateOneIndexOptions options = null, CancellationToken cancellationToken = default) => "";
+    public Task<string> CreateOneAsync(CreateIndexModel<Book> model, CreateOneIndexOptions options = null, CancellationToken cancellationToken = default) => null;
+    public Task<string> CreateOneAsync(IndexKeysDefinition<Book> keys, CreateIndexOptions options = null, CancellationToken cancellationToken = default) => null;
+    public Task<string> CreateOneAsync(IClientSessionHandle session, IndexKeysDefinition<Book> keys, CreateIndexOptions options = null, CancellationToken cancellationToken = default) => null;
+    public Task<string> CreateOneAsync(IClientSessionHandle session, CreateIndexModel<Book> model, CreateOneIndexOptions options = null, CancellationToken cancellationToken = default) => null;
     public void DropAll(IClientSessionHandle session, DropIndexOptions options, CancellationToken cancellationToken = default) {}
     public void DropAll(CancellationToken cancellationToken = default) {}
     public void DropAll(DropIndexOptions options, CancellationToken cancellationToken = default) {}
@@ -67,27 +67,27 @@ public class MockMongoIndexManager<Associate> : IMongoIndexManager<Associate>
 
 }
 
-public class MockMongoCollection<Associate> : MongoCollectionBase<Associate>
+public class MockMongoCollection<Book> : MongoCollectionBase<Book>
 {
-    public override void InsertOne(Associate document, InsertOneOptions options = null, CancellationToken cancellationToken = default) {}
+    public override void InsertOne(Book document, InsertOneOptions options = null, CancellationToken cancellationToken = default) {}
     public override MongoCollectionSettings Settings { get => null; }
-    public override IBsonSerializer<Associate> DocumentSerializer { get => null; }
+    public override IBsonSerializer<Book> DocumentSerializer { get => null; }
     public override IMongoDatabase Database { get => null; }
     public override CollectionNamespace CollectionNamespace { get => null; }
-    public override IMongoIndexManager<Associate> Indexes { get => new MockMongoIndexManager<Associate>(); }
-    public override Task<IAsyncCursor<TResult>> AggregateAsync<TResult>(PipelineDefinition<Associate, TResult> pipeline, AggregateOptions options = null, CancellationToken cancellationToken = default) => null;
-    public override Task<BulkWriteResult<Associate>> BulkWriteAsync(IEnumerable<WriteModel<Associate>> requests, BulkWriteOptions options = null, CancellationToken cancellationToken = default) => null;
-    public override Task<IAsyncCursor<TField>> DistinctAsync<TField>(FieldDefinition<Associate, TField> field, FilterDefinition<Associate> filter, DistinctOptions options = null, CancellationToken cancellationToken = default) => null;
-    public override Task<IAsyncCursor<TProjection>> FindAsync<TProjection>(FilterDefinition<Associate> filter, FindOptions<Associate, TProjection> options = null, CancellationToken cancellationToken = default) => null;
-    public override Task<TProjection> FindOneAndDeleteAsync<TProjection>(FilterDefinition<Associate> filter, FindOneAndDeleteOptions<Associate, TProjection> options = null, CancellationToken cancellationToken = default) => null;
-    public override Task<TProjection> FindOneAndReplaceAsync<TProjection>(FilterDefinition<Associate> filter, Associate replacement, FindOneAndReplaceOptions<Associate, TProjection> options = null, CancellationToken cancellationToken = default) => null;
-    public override Task<TProjection> FindOneAndUpdateAsync<TProjection>(FilterDefinition<Associate> filter, UpdateDefinition<Associate> update, FindOneAndUpdateOptions<Associate, TProjection> options = null, CancellationToken cancellationToken = default) => null;
-    public override Task<IAsyncCursor<TResult>> MapReduceAsync<TResult>(BsonJavaScript map, BsonJavaScript reduce, MapReduceOptions<Associate, TResult> options = null, CancellationToken cancellationToken = default) => null;
-    public override IMongoCollection<Associate> WithReadPreference(ReadPreference readPreference) => null;
-    public override IMongoCollection<Associate> WithWriteConcern(WriteConcern writeConcern) => null;
+    public override IMongoIndexManager<Book> Indexes { get => new MockMongoIndexManager<Book>(); }
+    public override Task<IAsyncCursor<TResult>> AggregateAsync<TResult>(PipelineDefinition<Book, TResult> pipeline, AggregateOptions options = null, CancellationToken cancellationToken = default) => null;
+    public override Task<BulkWriteResult<Book>> BulkWriteAsync(IEnumerable<WriteModel<Book>> requests, BulkWriteOptions options = null, CancellationToken cancellationToken = default) => null;
+    public override Task<IAsyncCursor<TField>> DistinctAsync<TField>(FieldDefinition<Book, TField> field, FilterDefinition<Book> filter, DistinctOptions options = null, CancellationToken cancellationToken = default) => null;
+    public override Task<IAsyncCursor<TProjection>> FindAsync<TProjection>(FilterDefinition<Book> filter, FindOptions<Book, TProjection> options = null, CancellationToken cancellationToken = default) => null;
+    public override Task<TProjection> FindOneAndDeleteAsync<TProjection>(FilterDefinition<Book> filter, FindOneAndDeleteOptions<Book, TProjection> options = null, CancellationToken cancellationToken = default) => null;
+    public override Task<TProjection> FindOneAndReplaceAsync<TProjection>(FilterDefinition<Book> filter, Book replacement, FindOneAndReplaceOptions<Book, TProjection> options = null, CancellationToken cancellationToken = default) => null;
+    public override Task<TProjection> FindOneAndUpdateAsync<TProjection>(FilterDefinition<Book> filter, UpdateDefinition<Book> update, FindOneAndUpdateOptions<Book, TProjection> options = null, CancellationToken cancellationToken = default) => null;
+    public override Task<IAsyncCursor<TResult>> MapReduceAsync<TResult>(BsonJavaScript map, BsonJavaScript reduce, MapReduceOptions<Book, TResult> options = null, CancellationToken cancellationToken = default) => null;
+    public override IMongoCollection<Book> WithReadPreference(ReadPreference readPreference) => null;
+    public override IMongoCollection<Book> WithWriteConcern(WriteConcern writeConcern) => null;
     public override IFilteredMongoCollection<TDerivedDocument> OfType<TDerivedDocument>() => null;
     [Obsolete]
-    public override Task<long> CountAsync(FilterDefinition<Associate> filter, CountOptions options = null, CancellationToken cancellationToken = default) => null;
+    public override Task<long> CountAsync(FilterDefinition<Book> filter, CountOptions options = null, CancellationToken cancellationToken = default) => null;
 
 
 
@@ -97,9 +97,9 @@ public class MockMongoCollection<Associate> : MongoCollectionBase<Associate>
 
 public class MockMongoDatabase : IMongoDatabase
 {
-    public IMongoCollection<Associate> GetCollection<Associate>(string name, MongoCollectionSettings settings = null)
+    public IMongoCollection<Book> GetCollection<Book>(string name, MongoCollectionSettings settings = null)
     {
-        return new MockMongoCollection<Associate>();
+        return new MockMongoCollection<Book>();
     }
     public MongoDatabaseSettings Settings { get => null; }
     public IMongoClient Client { get => null; }
@@ -116,10 +116,10 @@ public class MockMongoDatabase : IMongoDatabase
     public void CreateCollection(IClientSessionHandle session, string name, CreateCollectionOptions options = null, CancellationToken cancellationToken = default) {}
     public Task CreateCollectionAsync(string name, CreateCollectionOptions options = null, CancellationToken cancellationToken = default) => null;
     public Task CreateCollectionAsync(IClientSessionHandle session, string name, CreateCollectionOptions options = null, CancellationToken cancellationToken = default) => null;
-    public void CreateView<Associate, TResult>(string viewName, string viewOn, PipelineDefinition<Associate, TResult> pipeline, CreateViewOptions<Associate> options = null, CancellationToken cancellationToken = default) {}
-    public void CreateView<Associate, TResult>(IClientSessionHandle session, string viewName, string viewOn, PipelineDefinition<Associate, TResult> pipeline, CreateViewOptions<Associate> options = null, CancellationToken cancellationToken = default) {}
-    public Task CreateViewAsync<Associate, TResult>(string viewName, string viewOn, PipelineDefinition<Associate, TResult> pipeline, CreateViewOptions<Associate> options = null, CancellationToken cancellationToken = default) => null;
-    public Task CreateViewAsync<Associate, TResult>(IClientSessionHandle session, string viewName, string viewOn, PipelineDefinition<Associate, TResult> pipeline, CreateViewOptions<Associate> options = null, CancellationToken cancellationToken = default) => null;
+    public void CreateView<Book, TResult>(string viewName, string viewOn, PipelineDefinition<Book, TResult> pipeline, CreateViewOptions<Book> options = null, CancellationToken cancellationToken = default) {}
+    public void CreateView<Book, TResult>(IClientSessionHandle session, string viewName, string viewOn, PipelineDefinition<Book, TResult> pipeline, CreateViewOptions<Book> options = null, CancellationToken cancellationToken = default) {}
+    public Task CreateViewAsync<Book, TResult>(string viewName, string viewOn, PipelineDefinition<Book, TResult> pipeline, CreateViewOptions<Book> options = null, CancellationToken cancellationToken = default) => null;
+    public Task CreateViewAsync<Book, TResult>(IClientSessionHandle session, string viewName, string viewOn, PipelineDefinition<Book, TResult> pipeline, CreateViewOptions<Book> options = null, CancellationToken cancellationToken = default) => null;
     public void DropCollection(IClientSessionHandle session, string name, CancellationToken cancellationToken = default) {}
     public void DropCollection(string name, CancellationToken cancellationToken = default) {}
     public Task DropCollectionAsync(string name, CancellationToken cancellationToken = default) => null;

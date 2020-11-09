@@ -2,9 +2,9 @@
 using MongoDB.Driver;
 using System.Collections.Generic;
 using Microsoft.Extensions.Logging; 
-using AssociateManagement.Models.DBSettings;
+using BookBinderBE.Models.DBSettings;
 
-namespace AssociateManagement.Services
+namespace BookBinderBE.Services
 {
     abstract class MongoDbService<T> : IDatabaseService<T>
     {
@@ -15,7 +15,6 @@ namespace AssociateManagement.Services
         {
             _logger = logger;
 
-            // var client = new MongoClient(settings.ConnectionString);
             var database = client.GetDatabase(settings.DatabaseName);
             _collection = database.GetCollection<T>(settings.CollectionName);
         }
@@ -31,6 +30,10 @@ namespace AssociateManagement.Services
         {
             return _collection.Find(document => true).ToList();
         }
+
+        public abstract T Get(string id);
+
+        public abstract void Update(string id, T data);
 
         protected static CreateIndexModel<T> CreateUniqueField(string fieldName)
         {
